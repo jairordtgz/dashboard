@@ -9,7 +9,9 @@ function App() {
     <Grid container spacing={5} justifyContent="center" alignItems="center">
 
       {/* Encabezado */}
-      <Grid size={{ xs: 12, md: 12 }}> <HeaderUI/> </Grid>
+      <Grid size={{ xs: 12, md: 12 }}> 
+        <HeaderUI/> 
+      </Grid>
 
       {/* Alertas */}
       <Grid container justifyContent="right" alignItems="center">
