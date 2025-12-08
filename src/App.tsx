@@ -8,7 +8,7 @@ import useFetchData from './functions/useFetchData';
 
 function App() {
 
-  const dataFetcherOutput = useFetchData();
+  const {data,loading,error} = useFetchData();
 
   return (
     <Grid container spacing={5} justifyContent="center" alignItems="center">
@@ -33,45 +33,52 @@ function App() {
       {/* Indicadores */}
       <Grid container size={{ xs: 12, md: 9 }} >
 
-        <Grid size={{ xs: 12, md: 3 }}>
-          
-              {dataFetcherOutput && (
-                <IndicatorUI
-                  title='Temperatura (2m)'
-                  description={ `${dataFetcherOutput.current.temperature_2m} ${dataFetcherOutput.current_units.temperature_2m}` } 
-                /> )
-              }
+        {loading && (
+          <Grid size={12}>
+            <h2>Cargando datos...</h2>
+          </Grid>
+        )}
 
-        </Grid>
+        {error && (
+          <Grid size={12}>
+            <h2 style={{ color: "red" }}>Error: {error}</h2>
+          </Grid>
+        )}
 
-        <Grid size={{ xs: 12, md: 3 }}>
-          {/* IndicatorUI con la Temperatura aparente en °C' */}
-          {dataFetcherOutput && (
-            <IndicatorUI title='Temperatura aparente' 
-            description={`${dataFetcherOutput.current.apparent_temperature} ${dataFetcherOutput.current_units.apparent_temperature}`} />
+         {data && (
+          <>
+            <Grid size={{ xs: 12, md: 3 }}>
+              <IndicatorUI
+                title='Temperatura (2m)'
+                description={`${data.current.temperature_2m} ${data.current_units.temperature_2m}`}
+              />
+            </Grid>
 
-          )}
-          
-        </Grid>
+            <Grid size={{ xs: 12, md: 3 }}>
+              <IndicatorUI
+                title='Temperatura aparente'
+                description={`${data.current.apparent_temperature} ${data.current_units.apparent_temperature}`}
+              />
+            </Grid>
 
-        <Grid size={{ xs: 12, md: 3 }}>
-          {/* IndicatorUI con la Velocidad del viento en km/h' */}
-          {dataFetcherOutput && (
-            <IndicatorUI title='Velocidad del viento' 
-            description={`${dataFetcherOutput.current.wind_speed_10m} ${dataFetcherOutput.current_units.wind_speed_10m}`} />
-          )}
-        
-        </Grid>
+            <Grid size={{ xs: 12, md: 3 }}>
+              <IndicatorUI
+                title='Velocidad del viento'
+                description={`${data.current.wind_speed_10m} ${data.current_units.wind_speed_10m}`}
+              />
+            </Grid>
 
-        <Grid size={{ xs: 12, md: 3 }}>
-          {/* IndicatorUI con la Humedad relativa en %' */}
+            <Grid size={{ xs: 12, md: 3 }}>
+              <IndicatorUI
+                title='Humedad relativa'
+                description={`${data.current.relative_humidity_2m} ${data.current_units.relative_humidity_2m}`}
+              />
+            </Grid>
+          </>
+        )}
 
-          {dataFetcherOutput && (
-            <IndicatorUI title='Humedad relativa' description={`${dataFetcherOutput.current.relative_humidity_2m} ${dataFetcherOutput.current_units.relative_humidity_2m}`} />
-          )}
-        </Grid>
 
-      </Grid>
+      </Grid> 
 
       {/* Gráfico */}
       <Grid sx={{ display: { xs: "none", md: "block"} }}>Elemento: Gráfico</Grid>
