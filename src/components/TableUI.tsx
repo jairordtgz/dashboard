@@ -71,6 +71,7 @@ import Box from '@mui/material/Box';
 import { DataGrid, type GridColDef } from '@mui/x-data-grid';
 import useFetchData from '../functions/useFetchData';
 import CircularProgress from '@mui/material/CircularProgress';
+import Typography from '@mui/material/Typography';
 
 function combineArrays(arrLabels: Array<string>, arrValues1: Array<number>, arrValues2: Array<number>) {
    return arrLabels.map((label, index) => ({
@@ -112,14 +113,28 @@ const columns: GridColDef[] = [
 export default function TableUI() {
    const {data, loading, error} = useFetchData();
 
+   if (loading) {
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 350 }}>
+        <CircularProgress />
+      </Box>
+    );
+   }
+
+   if (error || !data?.hourly) {
+    return <Typography color="error">Error al cargar datos climáticos.</Typography>;
+  }
+
    // Manejo de estado de carga
-   if (!data) {
+/*    if (!data) {
       return (
          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 350 }}>
             <CircularProgress />
          </Box>
       );
    }
+
+*/
 
    // Extraer datos horarios (primeras 24 horas)
    const arrLabels = data.hourly.time.slice(0, 24).map(time => {

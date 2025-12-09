@@ -35,14 +35,27 @@ import useFetchData from '../functions/useFetchData';
 export default function ChartUI() {
    const {data, loading, error} = useFetchData();
 
+   if (loading){ 
+      return (
+         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 300 }}>
+            <CircularProgress />
+         </Box>
+      )
+   }
+
+   if (error || !data?.hourly) {
+      return <Typography color="error">Error al cargar datos climáticos.</Typography>;
+   }
+
    // Manejo de estado de carga
-   if (!data) {
+ /*  if (!data) {
       return (
          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 300 }}>
             <CircularProgress />
          </Box>
       );
-   }
+   } */
+
 
    // Extraer datos horarios (primeras 24 horas)
    const arrLabels = data.hourly.time.slice(0, 24).map(time => {
