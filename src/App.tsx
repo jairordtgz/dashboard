@@ -8,6 +8,7 @@ import useFetchData from './functions/useFetchData';
 import TableUI from './components/TableUI'; 
 import ChartUI from './components/ChartUI'; 
 import { useState } from 'react'
+import CohereAssistantUI from './components/CohereAssistantUI';
 
 function App() {
 
@@ -97,7 +98,9 @@ function App() {
       </Grid>
 
       {/* Información adicional */}
-      <Grid>Elemento: Información adicional</Grid>
+      <Grid>
+        <CohereAssistantUI city={selectedOption} weatherData={data} />
+      </Grid>
 
     </Grid>
   )
